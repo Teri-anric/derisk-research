@@ -13,6 +13,13 @@ DB_SERVER = os.environ.get("DB_HOST", "")
 DB_PORT = os.environ.get("DB_PORT", 5432)
 DB_NAME = os.environ.get("DB_NAME", "")
 
+REDIS_HOST = os.environ.get("REDIS_HOST", "")
+REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
+
+REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+
+TELEGRAM_NOTIFICATION_QUEUE = "telegram_notification_queue"
+
 DATABASE_URL = URL.create(
     drivername="postgresql+asyncpg",
     username=DB_USER,

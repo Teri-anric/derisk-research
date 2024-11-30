@@ -4,6 +4,7 @@ import asyncio
 from aiogram.types import BotCommand, BotCommandScopeDefault
 
 from . import bot, dp
+from .notifications import notifications_broadcasting
 from .crud import get_async_sessionmaker
 from .middleware import DatabaseMiddleware
 
@@ -21,7 +22,10 @@ async def bot_start_polling():
     async_sessionmaker = get_async_sessionmaker()
     dp.update.middleware(DatabaseMiddleware(async_sessionmaker))
 
-    await dp.start_polling(bot)
+    await asyncio.gather(
+        notifications_broadcasting(is_infinity=True),
+        dp.start_polling(bot)
+    )
 
 
 if __name__ == "__main__":
